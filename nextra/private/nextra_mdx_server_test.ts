@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('Nextra MDX Server Rule', () => {
   beforeEach(() => {
@@ -11,9 +11,9 @@ describe('Nextra MDX Server Rule', () => {
         name: 'mdx_server',
         srcs: ['pages/api.mdx', 'pages/examples.mdx'],
         port: 3001,
-        api_prefix: '/api/mdx'
+        api_prefix: '/api/mdx',
       };
-      
+
       expect(serverConfig.name).toBe('mdx_server');
       expect(serverConfig.port).toBe(3001);
       expect(serverConfig.api_prefix).toBe('/api/mdx');
@@ -21,7 +21,7 @@ describe('Nextra MDX Server Rule', () => {
 
     it('should support configurable port', () => {
       const ports = [3001, 3002, 8080, 9000];
-      ports.forEach(port => {
+      ports.forEach((port) => {
         expect(port).toBeGreaterThan(0);
         expect(port).toBeLessThan(65536);
       });
@@ -29,7 +29,7 @@ describe('Nextra MDX Server Rule', () => {
 
     it('should support configurable API prefix', () => {
       const prefixes = ['/api/mdx', '/docs/api', '/content'];
-      prefixes.forEach(prefix => {
+      prefixes.forEach((prefix) => {
         expect(prefix.startsWith('/')).toBe(true);
       });
     });
@@ -40,11 +40,11 @@ describe('Nextra MDX Server Rule', () => {
       const endpoints = [
         '/api/mdx/files',
         '/api/mdx/{filePath}',
-        '/api/mdx/health'
+        '/api/mdx/health',
       ];
       expect(endpoints.length).toBe(3);
-      
-      endpoints.forEach(endpoint => {
+
+      endpoints.forEach((endpoint) => {
         expect(endpoint.startsWith('/api/mdx')).toBe(true);
       });
     });
@@ -68,7 +68,7 @@ describe('Nextra MDX Server Rule', () => {
   describe('Content Handling', () => {
     it('should handle MDX file extensions', () => {
       const extensions = ['.mdx', '.md'];
-      extensions.forEach(ext => {
+      extensions.forEach((ext) => {
         expect(ext.startsWith('.')).toBe(true);
       });
     });
@@ -81,9 +81,9 @@ describe('Nextra MDX Server Rule', () => {
     it('should include file extension in headers', () => {
       const headers = {
         'Content-Type': 'text/markdown',
-        'X-File-Extension': '.mdx'
+        'X-File-Extension': '.mdx',
       };
-      
+
       expect(headers['Content-Type']).toBe('text/markdown');
       expect(headers['X-File-Extension']).toBe('.mdx');
     });
@@ -99,9 +99,9 @@ describe('Nextra MDX Server Rule', () => {
       const corsConfig = {
         origin: ['http://localhost:3000', 'https://example.com'],
         methods: ['GET'],
-        allowedHeaders: ['Content-Type']
+        allowedHeaders: ['Content-Type'],
       };
-      
+
       expect(corsConfig.methods).toContain('GET');
       expect(corsConfig.allowedHeaders).toContain('Content-Type');
     });
@@ -112,10 +112,10 @@ describe('Nextra MDX Server Rule', () => {
       const mdxFiles = [
         'pages/api.mdx',
         'pages/getting-started.mdx',
-        'pages/examples.mdx'
+        'pages/examples.mdx',
       ];
-      
-      mdxFiles.forEach(file => {
+
+      mdxFiles.forEach((file) => {
         expect(file.endsWith('.mdx')).toBe(true);
         expect(file.startsWith('pages/')).toBe(true);
       });
@@ -125,10 +125,10 @@ describe('Nextra MDX Server Rule', () => {
       const nestedFiles = [
         'pages/api/endpoints.mdx',
         'pages/guides/getting-started.mdx',
-        'pages/examples/basic.mdx'
+        'pages/examples/basic.mdx',
       ];
-      
-      nestedFiles.forEach(file => {
+
+      nestedFiles.forEach((file) => {
         expect(file.split('/').length).toBeGreaterThan(2);
       });
     });
@@ -157,9 +157,9 @@ describe('Nextra MDX Server Rule', () => {
     it('should handle file not found errors', () => {
       const errorResponse = {
         error: 'File not found',
-        path: 'non-existent-file'
+        path: 'non-existent-file',
       };
-      
+
       expect(errorResponse.error).toBe('File not found');
       expect(errorResponse.path).toBe('non-existent-file');
     });
@@ -167,15 +167,15 @@ describe('Nextra MDX Server Rule', () => {
     it('should handle server errors gracefully', () => {
       const serverError = {
         error: 'Internal server error',
-        message: 'Error details'
+        message: 'Error details',
       };
-      
+
       expect(serverError.error).toBe('Internal server error');
     });
 
     it('should validate file paths', () => {
       const invalidPaths = ['../invalid.mdx', 'invalid/../path.mdx'];
-      invalidPaths.forEach(path => {
+      invalidPaths.forEach((path) => {
         expect(path.includes('..')).toBe(true);
       });
     });
@@ -188,7 +188,7 @@ describe('Nextra MDX Server Rule', () => {
         const mdxContent = await response.text();
         return <MDXClient source={mdxContent} />;
       `;
-      
+
       expect(integrationExample).toContain('fetch');
       expect(integrationExample).toContain('MDXClient');
     });
@@ -198,7 +198,7 @@ describe('Nextra MDX Server Rule', () => {
         const response = await fetch('http://localhost:3001/api/mdx/files');
         const { files } = await response.json();
       `;
-      
+
       expect(navExample).toContain('files');
     });
   });

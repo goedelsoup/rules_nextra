@@ -1,0 +1,5 @@
+# TypeScript configuration for aspect_rules_ts
+# Use skipLibCheck for faster builds
+build --@aspect_rules_ts//ts:skipLibCheck=always
+fetch --@aspect_rules_ts//ts:skipLibCheck=always
+query --@aspect_rules_ts//ts:skipLibCheck=always

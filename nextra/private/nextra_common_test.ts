@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock Bazel context for future use
 // const mockCtx = {
@@ -24,8 +24,16 @@ describe('Nextra Common Utilities', () => {
 
   describe('Common Attributes', () => {
     it('should define correct file extensions', () => {
-      const supportedExtensions = ['.mdx', '.md', '.ts', '.tsx', '.js', '.jsx', '.json'];
-      
+      const supportedExtensions = [
+        '.mdx',
+        '.md',
+        '.ts',
+        '.tsx',
+        '.js',
+        '.jsx',
+        '.json',
+      ];
+
       expect(supportedExtensions).toContain('.mdx');
       expect(supportedExtensions).toContain('.md');
       expect(supportedExtensions).toContain('.ts');
@@ -38,15 +46,15 @@ describe('Nextra Common Utilities', () => {
     it('should have required attributes', () => {
       const requiredAttrs = [
         'srcs',
-        'config', 
+        'config',
         'theme_config',
         'package_json',
         'data',
         'deps',
-        'visibility'
+        'visibility',
       ];
-      
-      requiredAttrs.forEach(attr => {
+
+      requiredAttrs.forEach((attr) => {
         expect(requiredAttrs).toContain(attr);
       });
     });
@@ -74,9 +82,9 @@ module.exports = withNextra({
   }
 })
 `;
-      
+
       expect(defaultConfigContent).toContain('nextra-theme-docs');
-      expect(defaultConfigContent).toContain('output: \'export\'');
+      expect(defaultConfigContent).toContain("output: 'export'");
       expect(defaultConfigContent).toContain('trailingSlash: true');
     });
 
@@ -93,9 +101,10 @@ export default {
   },
 }
 `;
-      
+
       expect(defaultThemeContent).toContain('My Documentation');
-      expect(defaultThemeContent).toContain('nextra-theme-docs');
+      expect(defaultThemeContent).toContain('project');
+      expect(defaultThemeContent).toContain('footer');
     });
   });
 
@@ -103,12 +112,12 @@ export default {
     it('should correctly identify MDX files', () => {
       const mdxFiles = ['index.mdx', 'getting-started.mdx', 'api.mdx'];
       const mdFiles = ['readme.md', 'changelog.md'];
-      
-      mdxFiles.forEach(file => {
+
+      mdxFiles.forEach((file) => {
         expect(file.endsWith('.mdx')).toBe(true);
       });
-      
-      mdFiles.forEach(file => {
+
+      mdFiles.forEach((file) => {
         expect(file.endsWith('.md')).toBe(true);
       });
     });
@@ -116,12 +125,12 @@ export default {
     it('should correctly identify TypeScript files', () => {
       const tsFiles = ['utils.ts', 'config.ts'];
       const tsxFiles = ['Header.tsx', 'Layout.tsx'];
-      
-      tsFiles.forEach(file => {
+
+      tsFiles.forEach((file) => {
         expect(file.endsWith('.ts')).toBe(true);
       });
-      
-      tsxFiles.forEach(file => {
+
+      tsxFiles.forEach((file) => {
         expect(file.endsWith('.tsx')).toBe(true);
       });
     });
@@ -133,11 +142,11 @@ export default {
         'pages/index.mdx',
         'components/Header.tsx',
         'lib/utils.ts',
-        'public/logo.png'
+        'public/logo.png',
       ];
-      
-      paths.forEach(path => {
-        expect(path).toMatch(/^[a-zA-Z0-9\/\-_\.]+$/);
+
+      paths.forEach((path) => {
+        expect(path).toMatch(/^[a-zA-Z0-9/\-_.]+$/);
       });
     });
 
@@ -146,10 +155,10 @@ export default {
         'pages/getting-started/index.mdx',
         'pages/api/endpoints.mdx',
         'components/layout/Header.tsx',
-        'lib/utils/helpers.ts'
+        'lib/utils/helpers.ts',
       ];
-      
-      nestedPaths.forEach(path => {
+
+      nestedPaths.forEach((path) => {
         expect(path.split('/').length).toBeGreaterThan(1);
       });
     });

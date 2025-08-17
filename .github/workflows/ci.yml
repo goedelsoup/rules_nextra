@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  test:
+    name: Test and Build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: latest
+        
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+      
+    - name: Setup Bazel
+      uses: bazelbuild/setup-bazelisk@v3
+      
+    - name: Run linting
+      run: pnpm run lint
+      
+    - name: Check formatting
+      run: pnpm run format:check
+      
+    - name: Run tests
+      run: pnpm run test
+      
+    - name: Type check
+      run: pnpm run build
+      
+    - name: Bazel Status Check
+      run: |
+        echo "=== Bazel Configuration Status ==="
+        echo "Bazel version:"
+        bazel --version || echo "Bazel not available"
+        echo ""
+        echo "Note: Bazel operations are currently disabled due to WORKSPACE configuration issues"
+        echo "The Node.js operations above (linting, formatting, tests, type checking) are the primary CI checks"
+        echo "See CI_SETUP.md for details on fixing Bazel configuration"
+        echo ""
+        echo "To enable Bazel operations, you need to:"
+        echo "1. Fix the WORKSPACE file with correct repository configurations"
+        echo "2. Set up proper Node.js toolchain"
+        echo "3. Configure TypeScript dependencies correctly"
+      continue-on-error: true
