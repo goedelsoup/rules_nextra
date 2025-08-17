@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('Nextra Standalone Rule', () => {
   beforeEach(() => {
@@ -13,9 +13,9 @@ describe('Nextra Standalone Rule', () => {
         config: 'next.config.js',
         theme_config: 'theme.config.jsx',
         out_dir: 'out',
-        export_static: true
+        export_static: true,
       };
-      
+
       expect(ruleConfig.name).toBe('docs');
       expect(ruleConfig.export_static).toBe(true);
       expect(ruleConfig.out_dir).toBe('out');
@@ -36,8 +36,8 @@ describe('Nextra Standalone Rule', () => {
     it('should handle MDX source files', () => {
       const mdxFiles = ['index.mdx', 'getting-started.mdx', 'api.mdx'];
       expect(mdxFiles.length).toBe(3);
-      
-      mdxFiles.forEach(file => {
+
+      mdxFiles.forEach((file) => {
         expect(file.endsWith('.mdx')).toBe(true);
       });
     });
@@ -45,8 +45,8 @@ describe('Nextra Standalone Rule', () => {
     it('should handle TypeScript source files', () => {
       const tsFiles = ['components/Header.tsx', 'lib/utils.ts'];
       expect(tsFiles.length).toBe(2);
-      
-      tsFiles.forEach(file => {
+
+      tsFiles.forEach((file) => {
         expect(file.endsWith('.ts') || file.endsWith('.tsx')).toBe(true);
       });
     });
@@ -56,14 +56,14 @@ describe('Nextra Standalone Rule', () => {
         'pages/index.mdx',
         'components/Header.tsx',
         'lib/utils.ts',
-        'public/logo.png'
+        'public/logo.png',
       ];
-      
+
       expect(mixedFiles.length).toBe(4);
-      expect(mixedFiles.some(f => f.endsWith('.mdx'))).toBe(true);
-      expect(mixedFiles.some(f => f.endsWith('.tsx'))).toBe(true);
-      expect(mixedFiles.some(f => f.endsWith('.ts'))).toBe(true);
-      expect(mixedFiles.some(f => f.endsWith('.png'))).toBe(true);
+      expect(mixedFiles.some((f) => f.endsWith('.mdx'))).toBe(true);
+      expect(mixedFiles.some((f) => f.endsWith('.tsx'))).toBe(true);
+      expect(mixedFiles.some((f) => f.endsWith('.ts'))).toBe(true);
+      expect(mixedFiles.some((f) => f.endsWith('.png'))).toBe(true);
     });
   });
 
@@ -84,9 +84,9 @@ describe('Nextra Standalone Rule', () => {
       const buildSteps = [
         'npm install',
         'npx next build',
-        'npx next export -o out'
+        'npx next export -o out',
       ];
-      
+
       expect(buildSteps).toContain('npx next build');
       expect(buildSteps).toContain('npx next export -o out');
     });
@@ -111,9 +111,9 @@ describe('Nextra Standalone Rule', () => {
         mdx: 'pages/',
         components: 'components/',
         lib: 'lib/',
-        public: 'public/'
+        public: 'public/',
       };
-      
+
       expect(fileOrganization.mdx).toBe('pages/');
       expect(fileOrganization.components).toBe('components/');
       expect(fileOrganization.lib).toBe('lib/');
@@ -124,10 +124,10 @@ describe('Nextra Standalone Rule', () => {
       const nestedFiles = [
         'pages/getting-started/index.mdx',
         'components/layout/Header.tsx',
-        'lib/utils/helpers.ts'
+        'lib/utils/helpers.ts',
       ];
-      
-      nestedFiles.forEach(file => {
+
+      nestedFiles.forEach((file) => {
         expect(file.split('/').length).toBeGreaterThan(1);
       });
     });
@@ -141,7 +141,7 @@ describe('Nextra Standalone Rule', () => {
 
     it('should handle invalid file paths', () => {
       const invalidPaths = ['../invalid.mdx', 'invalid/../path.mdx'];
-      invalidPaths.forEach(path => {
+      invalidPaths.forEach((path) => {
         expect(path.includes('..')).toBe(true);
       });
     });

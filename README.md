@@ -291,13 +291,55 @@ This ruleset requires:
 - **Biome**: Linting and formatting (optional)
 - **Vitest**: Testing (optional)
 
+## Development
+
+### Local Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Run linting
+pnpm run lint
+
+# Check formatting
+pnpm run format --check
+
+# Run tests
+pnpm run test
+
+# Type check
+pnpm run build
+
+# Bazel commands
+bazel build //:all
+bazel test //:workspace_tests
+bazel run //:workspace_lint
+bazel run //:workspace_format
+```
+
+### CI/CD
+
+This project uses GitHub Actions for continuous integration. The CI pipeline runs on every push and pull request and includes:
+
+- **Linting**: Biome-based code linting
+- **Formatting**: Code formatting checks
+- **Testing**: Vitest unit tests
+- **Type Checking**: TypeScript compilation checks
+- **Bazel Builds**: Building all Bazel targets
+- **Example Builds**: Building standalone and MDX server examples
+- **Integration Tests**: Running integration tests
+
+The CI workflow is defined in `.github/workflows/ci.yml`.
+
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
 4. Add tests
-5. Submit a pull request
+5. Ensure CI passes
+6. Submit a pull request
 
 ## License
 

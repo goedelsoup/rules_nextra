@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test and Build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+        
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+        
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+      
+    - name: Setup Bazel
+      uses: bazelbuild/setup-bazelisk@v3
+      
+    - name: Run linting
+      run: pnpm run lint
+      
+    - name: Check formatting
+      run: pnpm run format
+      
+    - name: Run tests
+      run: pnpm run test
+      
+    - name: Type check
+      run: pnpm run build
+      
+    - name: Run Bazel linting
+      run: bazel run //:workspace_lint
+      
+    - name: Run Bazel formatting check
+      run: bazel run //:workspace_format
+      
+    - name: Run Bazel tests
+      run: bazel test //:workspace_tests
+      
+    - name: Build Bazel targets
+      run: bazel build //:all
+      
+    - name: Build examples
+      run: |
+        bazel build //examples/standalone:all
+        bazel build //examples/mdx-server:all
+      
+    - name: Run integration tests
+      run: bazel test //nextra/...
