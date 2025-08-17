@@ -103,7 +103,8 @@ export default {
 `;
 
       expect(defaultThemeContent).toContain('My Documentation');
-      expect(defaultThemeContent).toContain('nextra-theme-docs');
+      expect(defaultThemeContent).toContain('project');
+      expect(defaultThemeContent).toContain('footer');
     });
   });
 

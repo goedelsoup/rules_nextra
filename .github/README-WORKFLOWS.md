@@ -6,6 +6,8 @@ This document describes the CI setup for the rules_nextra project and how to res
 
 The GitHub Actions CI workflow is set up in `.github/workflows/ci.yml` and includes:
 
+**✅ CI is fully functional for Node.js operations**
+
 ### ✅ Working Components
 - **Node.js setup** with pnpm package manager
 - **Linting** with Biome (`pnpm run lint`)
@@ -13,12 +15,12 @@ The GitHub Actions CI workflow is set up in `.github/workflows/ci.yml` and inclu
 - **Unit tests** with Vitest (`pnpm run test`)
 - **Type checking** with TypeScript (`pnpm run build`)
 
-### ⚠️ Bazel Components (Need Configuration)
-- **Bazel linting** (`bazel run //:workspace_lint`)
-- **Bazel formatting** (`bazel run //:workspace_format`)
-- **Bazel tests** (`bazel test //:workspace_tests`)
-- **Bazel builds** (`bazel build //:all`)
-- **Example builds** and integration tests
+### ⚠️ Bazel Components (Currently Disabled)
+- **Bazel linting** (`bazel run //:workspace_lint`) - Disabled due to WORKSPACE configuration
+- **Bazel formatting** (`bazel run //:workspace_format`) - Disabled due to WORKSPACE configuration
+- **Bazel tests** (`bazel test //:workspace_tests`) - Disabled due to WORKSPACE configuration
+- **Bazel builds** (`bazel build //:all`) - Disabled due to WORKSPACE configuration
+- **Example builds** and integration tests - Disabled due to WORKSPACE configuration
 
 ## Issue: WORKSPACE Configuration
 
