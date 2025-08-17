@@ -1,0 +1,67 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_ts//npm:defs.bzl", "npm_package")
+load("@aspect_rules_biome//biome:defs.bzl", "biome_check", "biome_format")
+load("@aspect_rules_vitest//vitest:defs.bzl", "vitest_test")
+
+# TypeScript project for the rules
+ts_project(
+    name = "nextra_rules_ts",
+    srcs = glob([
+        "**/*.ts",
+        "**/*.tsx",
+    ]),
+    declaration = True,
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "//:node_modules/@types/node",
+    ],
+)
+
+# NPM package for the rules
+npm_package(
+    name = "nextra_rules_package",
+    srcs = glob([
+        "**/*",
+    ]),
+    package = "//:package.json",
+    visibility = ["//visibility:public"],
+)
+
+# Biome linting
+biome_check(
+    name = "nextra_lint",
+    srcs = glob([
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.jsx",
+    ]),
+    config = "//:biome.json",
+)
+
+# Biome formatting
+biome_format(
+    name = "nextra_format",
+    srcs = glob([
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.jsx",
+    ]),
+    config = "//:biome.json",
+)
+
+# Tests
+vitest_test(
+    name = "nextra_tests",
+    srcs = glob([
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+    ]),
+    deps = [
+        ":nextra_rules_ts",
+    ],
+    config = "//:vitest.config.ts",
+)

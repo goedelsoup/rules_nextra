@@ -1,0 +1,35 @@
+{
+  "name": "rules_nextra",
+  "version": "1.0.0",
+  "description": "Bazel rules for Nextra v4 documentation sites",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "dependencies": {
+    "nextra": "^4.0.0",
+    "nextra-theme-docs": "^4.0.0",
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0",
+    "@biomejs/biome": "^1.0.0"
+  },
+  "keywords": [
+    "bazel",
+    "nextra",
+    "documentation",
+    "static-site",
+    "mdx"
+  ],
+  "author": "Rules Nextra Contributors",
+  "license": "MIT"
+}

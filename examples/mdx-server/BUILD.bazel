@@ -1,0 +1,13 @@
+load("//nextra:defs.bzl", "nextra_mdx_server")
+
+# MDX Server for serving raw MDX content
+nextra_mdx_server(
+    name = "mdx_server",
+    srcs = glob([
+        "pages/**/*.mdx",
+        "pages/**/*.md",
+    ]),
+    port = 3001,
+    api_prefix = "/api/mdx",
+    visibility = ["//visibility:public"],
+)

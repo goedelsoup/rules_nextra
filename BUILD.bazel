@@ -1,0 +1,88 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_ts//npm:defs.bzl", "npm_package")
+load("@aspect_rules_biome//biome:defs.bzl", "biome_check", "biome_format")
+load("@aspect_rules_vitest//vitest:defs.bzl", "vitest_test")
+
+# TypeScript project for the entire workspace
+ts_project(
+    name = "workspace_ts",
+    srcs = glob([
+        "**/*.ts",
+        "**/*.tsx",
+    ]),
+    declaration = True,
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "//:node_modules/@types/node",
+        "//:node_modules/@types/react",
+        "//:node_modules/@types/react-dom",
+    ],
+)
+
+# NPM package for the workspace
+npm_package(
+    name = "workspace_package",
+    srcs = glob([
+        "**/*",
+    ]),
+    package = "//:package.json",
+    visibility = ["//visibility:public"],
+)
+
+# Biome linting for the workspace
+biome_check(
+    name = "workspace_lint",
+    srcs = glob([
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.jsx",
+    ]),
+    config = "//:biome.json",
+)
+
+# Biome formatting for the workspace
+biome_format(
+    name = "workspace_format",
+    srcs = glob([
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.jsx",
+    ]),
+    config = "//:biome.json",
+)
+
+# Tests for the workspace
+vitest_test(
+    name = "workspace_tests",
+    srcs = glob([
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+    ]),
+    deps = [
+        ":workspace_ts",
+    ],
+    config = "//:vitest.config.ts",
+)
+
+# Convenience targets
+filegroup(
+    name = "all",
+    srcs = [
+        ":workspace_ts",
+        ":workspace_package",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "docs",
+    srcs = [
+        "README.md",
+        "examples/",
+    ],
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,53 @@
+# API Documentation
+
+This is an example MDX file that will be served by the MDX server.
+
+## API Endpoints
+
+### GET /api/mdx/files
+Returns a list of all available MDX files.
+
+**Response:**
+```json
+{
+  "files": [
+    {
+      "path": "api-docs",
+      "extension": ".mdx",
+      "size": 1024,
+      "modified": "2024-01-01T00:00:00.000Z"
+    }
+  ]
+}
+```
+
+### GET /api/mdx/{filePath}
+Returns the raw MDX content for a specific file.
+
+**Parameters:**
+- `filePath` (string): The path to the MDX file (without extension)
+
+**Response:**
+- Content-Type: `text/markdown`
+- Body: Raw MDX content
+
+## Usage Example
+
+```typescript
+// Fetch MDX content from the server
+const response = await fetch('http://localhost:3001/api/mdx/api-docs');
+const mdxContent = await response.text();
+```
+
+## Integration with Next.js MDXClient
+
+```typescript
+import { MDXClient } from 'next-mdx-remote/rsc';
+
+// In your Next.js component
+const mdxContent = await fetch('http://localhost:3001/api/mdx/api-docs').then(r => r.text());
+
+return (
+  <MDXClient source={mdxContent} />
+);
+```

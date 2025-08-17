@@ -1,0 +1,15 @@
+load("//nextra:defs.bzl", "nextra_standalone")
+
+# Standalone Nextra documentation site
+nextra_standalone(
+    name = "docs",
+    srcs = glob([
+        "pages/**/*.mdx",
+        "pages/**/*.md",
+        "components/**/*.tsx",
+        "lib/**/*.ts",
+    ]),
+    config = "next.config.js",
+    theme_config = "theme.config.jsx",
+    visibility = ["//visibility:public"],
+)
